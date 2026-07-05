@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import enums.MembershipLevel;
+import enums.UserRole;
 
 public class Guest extends User {
 
