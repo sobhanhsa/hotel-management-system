@@ -7,7 +7,7 @@ import interfaces.Billable;
 import interfaces.Notifiable;
 import interfaces.RoomObserver;
 
-public class Reservation implements Billable, Notifiable {
+public class Reservation implements Billable {
 
     private String reservationId;
     private Guest guest;
@@ -42,20 +42,5 @@ public class Reservation implements Billable, Notifiable {
 
     public void cancel() { }
 
-    @Override
-    public void registerObserver(RoomObserver o) {
-        observers.add(o);
-    }
     
-    @Override
-    public void removeObserver(RoomObserver o) {
-        observers.remove(o);
-    }
-
-    @Override
-    public void notifyObservers(String roomNumber) {
-        for (RoomObserver o : observers) {
-            o.onRoomAvailable(roomNumber);
-        }
-    }
 }
