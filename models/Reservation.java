@@ -3,13 +3,11 @@ import java.util.List;
 
 import enums.ReservationStatus;
 import interfaces.Billable;
-import interfaces.Filterable;
 import interfaces.Searchable;
 
 public class Reservation implements
         Billable,
-        Searchable<Reservation>,
-        Filterable<Reservation>     {
+        Searchable<Reservation>     {
 
     private String reservationId;
     private Guest guest;
