@@ -23,7 +23,6 @@ public class Reservation implements Billable {
     private List<Service> services = new ArrayList<>();
     private List<Payment> payments = new ArrayList<>();
 
-    private List<RoomObserver> observers = new ArrayList<>();
 
     @Override
     public double calculateTotal() {
@@ -33,14 +32,4 @@ public class Reservation implements Billable {
     @Override
     public void applyDiscount(double percent) {
     }
-
-    public void confirm() { }
-
-    public void checkIn() { }
-
-    public void checkOut() { }
-
-    public void cancel() { }
-
-    
 }
