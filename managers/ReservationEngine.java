@@ -8,8 +8,12 @@ import java.util.List;
 import enums.ReservationStatus;
 import enums.RoomStatus;
 import enums.RoomType;
+import exceptions.InvalidDateRangeException;
+import exceptions.ReservationConflictException;
+import exceptions.RoomNotAvailableException;
 import interfaces.Notifiable;
 import interfaces.RoomObserver;
+import models.Guest;
 import models.Reservation;
 import models.Room;
 
@@ -93,7 +97,66 @@ public class ReservationEngine implements Notifiable {
     }
 
 
-    public Reservation createReservation(...);
+    public Reservation createReservation(
+        Guest guest,
+        Room room,
+        ArrayList<LocalDate> dates,
+        int guestCount
+    )
+        throws 
+        InvalidDateRangeException,
+        RoomNotAvailableException,
+        ReservationConflictException 
+        {
+
+
+        if (dates == null || dates.size() < 2) {
+            throw new InvalidDateRangeException(
+                "Invalid reservation dates"
+            );
+        }
+
+
+        if (room.getStatus() != RoomStatus.AVAILABLE) {
+            throw new RoomNotAvailableException(
+                "Room is not available"
+            );
+        }
+
+
+        if (hasConflict(room, dates)) {
+            throw new ReservationConflictException(
+                "Room already reserved for these dates"
+            );
+        }
+
+
+        Reservation reservation =
+            new Reservation(
+                    guest,
+                    room,
+                    dates
+        );
+
+
+        reservation.setStatus(
+                ReservationStatus.PENDING
+        );
+
+
+        room.setStatus(
+                RoomStatus.RESERVED
+        );
+
+
+        reservations.add(reservation);
+
+
+        guest.addReservation(reservation);
+
+
+        return reservation;
+    }
 
     public void confirmReservation(...);
 
