@@ -10,13 +10,11 @@ public class DeluxeRoom extends Room {
 
     @Override
     public double calculatePrice(int nights, int guestCount,
-        double seasonFactor,
-        double membershipDiscount
+        double seasonFactor
     ) {
 
         double guestFactor = calcGuestFactor(guestCount);
 
-        return basePrice * 1.5 * seasonFactor * guestFactor * nights
-                * (1 - membershipDiscount);
+        return basePrice * 1.5 * seasonFactor * guestFactor * nights;
     }
 }

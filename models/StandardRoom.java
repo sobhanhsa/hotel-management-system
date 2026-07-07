@@ -11,13 +11,11 @@ public class StandardRoom extends Room {
     @Override
     public double calculatePrice(
             int nights, int guestCount,
-            double seasonFactor,
-            double membershipDiscount
+            double seasonFactor
         ) {
 
         double guestFactor = calcGuestFactor(guestCount);
 
-        return basePrice * 1.0 * seasonFactor * guestFactor * nights
-                * (1 - membershipDiscount);
+        return basePrice * 1.0 * seasonFactor * guestFactor * nights;
     }
 }

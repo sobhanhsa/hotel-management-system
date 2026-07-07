@@ -50,7 +50,6 @@ public abstract class Room {
     public abstract double calculatePrice(
         int nights,
         int guestCount,
-        double seasonFactor,
-        double membershipDiscount
+        double seasonFactor
     );
 }
