@@ -8,6 +8,8 @@ public class Invoice implements Billable, Exportable {
 
     private static int nextInvoiceId = 1;
 
+    private int lastCalculatedPaymentIndex = 0;
+
     private final String invoiceId;
     private final Reservation reservation;
     private final List<ServiceOrder> serviceOrders;
@@ -107,9 +109,12 @@ public class Invoice implements Billable, Exportable {
     private double getTotalPayments() {
         double total = 0;
 
-        for (Payment payment : payments) {
-            total += payment.getAmount();
+        for (int i = lastCalculatedPaymentIndex; i < payments.size(); i++) {
+            total += payments.get(i).getAmount();
         }
+
+        // so only new payments will apply
+        lastCalculatedPaymentIndex = payments.size();
 
         return total;
     }
