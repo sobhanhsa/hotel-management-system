@@ -15,7 +15,8 @@ public class Invoice implements Billable, Exportable {
 
     private double accommodationCost;
     private double serviceCost;
-    private double membershipDiscount;
+    private double membershipDiscountٍRate;
+    private double membershipDiscount = 0;
     private double cityTax;
     private double vat;
     private double totalAmount;
@@ -26,6 +27,14 @@ public class Invoice implements Billable, Exportable {
         this.reservation = reservation;
         this.serviceOrders = new ArrayList<>();
         this.payments = new ArrayList<>();
+
+        getMemberShipDiscountRate();
+
+    }
+
+    public double getMemberShipDiscountRate() {
+        membershipDiscountٍRate = this.reservation.getGuest()
+            .getMembershipLevel().getDiscountRate();
     }
 
     public void addService(ServiceOrder service) {
@@ -39,8 +48,9 @@ public class Invoice implements Billable, Exportable {
 
     private void calculateAccommodationCost() {
         accommodationCost = reservation.getRoom().calculatePrice(
-                reservation.getDates(),
-                reservation.getGuest()
+                reservation.getNights(),
+                reservation.getGuestCount(),
+                this.reservation.getSeason().getRate()
         );
     }
 
@@ -52,38 +62,38 @@ public class Invoice implements Billable, Exportable {
         }
     }
 
+    // useless for this architecture
     @Override
-    public void applyDiscount() {
-        membershipDiscount =
-                (accommodationCost + serviceCost)
-                        * reservation.getGuest()
-                        .getMembershipLevel()
-                        .getDiscountRate();
+    public void applyDiscount(double percent) {
+        
     }
 
-    private void calculateCityTax() {
-        cityTax = (accommodationCost + serviceCost - membershipDiscount) * 0.01;
+
+    private void calculateCityTax(double amount) {
+        cityTax = amount * 0.01;
     }
 
-    private void calculateVat() {
-        vat = (accommodationCost + serviceCost - membershipDiscount) * 0.09;
+    private void calculateVat(double amount) {
+        vat = amount * 0.09;
     }
 
     @Override
     public double calculateTotal() {
 
+        // membership discount only applies to services and Accommodation costs
+
         calculateAccommodationCost();
         calculateServiceCost();
-        applyDiscount();
-        calculateCityTax();
-        calculateVat();
 
-        totalAmount =
-                accommodationCost
-                        + serviceCost
-                        - membershipDiscount
-                        + cityTax
-                        + vat;
+        membershipDiscount = totalAmount * membershipDiscountٍRate;
+
+        totalAmount = (accommodationCost+serviceCost) * (1 - membershipDiscountٍRate);
+
+
+        calculateCityTax(totalAmount);
+        calculateVat(totalAmount);
+
+        totalAmount += (vat + cityTax);
 
         updateBalance();
 
