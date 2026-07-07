@@ -60,7 +60,7 @@ public class Invoice implements Billable, Exportable {
         serviceCost = 0;
 
         for (ServiceOrder service : serviceOrders) {
-            serviceCost += service.getPrice();
+            serviceCost += service.getTotalPrice(this.reservation.getGuest());
         }
     }
 
@@ -150,7 +150,7 @@ public class Invoice implements Billable, Exportable {
         );
     }
 
-    public String getInvoiceId() {
+    public int getInvoiceId() {
         return invoiceId;
     }
 
