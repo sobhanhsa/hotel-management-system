@@ -9,12 +9,25 @@ public class Reservation implements
         Billable,
         Searchable<Reservation>     {
 
-    private String reservationId;
+    protected static int nextResevationId = 1;
+    private int reservationId;
     private Guest guest;
     private Room room;
-    private LocalDate checkInDate;
-    private LocalDate checkOutDate;
+    private List<LocalDate> dates;
     private ReservationStatus status;
+
+    public Reservation(
+        Guest guest,
+        Room room,
+        List<LocalDate> dates
+    ) {
+
+        this.reservationId = nextResevationId++;
+        this.guest = guest;
+        this.room = room;
+        this.dates = dates;
+        this.status = ReservationStatus.PENDING;
+    }
 
     @Override
     public double calculateTotal() {
