@@ -50,6 +50,10 @@ public class Reservation implements
         this.guestCount = guestCount;
     }
 
+    public void setStatus(ReservationStatus status) {
+        this.status = status;
+    }
+
     public String getReservationId() {
         return reservationId;
     }
