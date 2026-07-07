@@ -29,6 +29,15 @@ public class Reservation implements
         this.status = ReservationStatus.PENDING;
     }
 
+    public int getReservationId() {
+        return reservationId;
+    }
+
+    public Guest getGuest() {
+        return guest;
+    }
+
+
     @Override
     public double calculateTotal() {
         return 0;
