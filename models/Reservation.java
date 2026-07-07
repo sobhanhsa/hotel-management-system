@@ -70,6 +70,10 @@ public class Reservation implements
         return status;
     }
 
+    public List<LocalDate> getDates() {
+        return dates;
+    }
+
     public int getGuestCount() {
         return this.guestCount;
     }
