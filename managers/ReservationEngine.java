@@ -176,7 +176,28 @@ public class ReservationEngine implements Notifiable {
         );
     }
 
-    public void checkIn(...);
+    public void checkIn(
+            Reservation reservation
+    ) {
+
+
+        if (reservation.getStatus()
+                != ReservationStatus.CONFIRMED) {
+
+            return;
+        }
+
+
+        reservation.setStatus(
+                ReservationStatus.ACTIVE
+        );
+
+
+        reservation.getRoom()
+            .setStatus(
+                RoomStatus.OCCUPIED
+            );
+    }
 
     public void checkOut(...);
 
