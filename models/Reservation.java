@@ -20,6 +20,7 @@ public class Reservation implements
     private List<LocalDate> dates;
     private ReservationStatus status;
     private int guestCount;
+    private Invoice invoice;
 
     public Reservation(
         Guest guest,
@@ -98,6 +99,14 @@ public class Reservation implements
         else {
             return Season.WINTER;     
         }
+    }
+
+    public Invoice getInvoice() {
+        return invoice;
+    }
+
+    public void setInvoice(Invoice invoice) {
+        this.invoice = invoice;
     }
 
     // AccommodationCost total price
