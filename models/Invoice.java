@@ -30,11 +30,11 @@ public class Invoice implements Billable, Exportable {
         this.serviceOrders = new ArrayList<>();
         this.payments = new ArrayList<>();
 
-        getMemberShipDiscountRate();
+        setMemberShipDiscountRate();
 
     }
 
-    public double getMemberShipDiscountRate() {
+    public void setMemberShipDiscountRate() {
         membershipDiscountٍRate = this.reservation.getGuest()
             .getMembershipLevel().getDiscountRate();
     }
