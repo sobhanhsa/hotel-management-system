@@ -10,7 +10,7 @@ public class Invoice implements Billable, Exportable {
 
     private int lastCalculatedPaymentIndex = 0;
 
-    private final String invoiceId;
+    private final int invoiceId;
     private final Reservation reservation;
     private final List<ServiceOrder> serviceOrders;
     private final List<Payment> payments;
@@ -25,7 +25,7 @@ public class Invoice implements Billable, Exportable {
     private double balance;
 
     public Invoice(Reservation reservation) {
-        this.invoiceId = "I" + nextInvoiceId++;
+        this.invoiceId = nextInvoiceId++;
         this.reservation = reservation;
         this.serviceOrders = new ArrayList<>();
         this.payments = new ArrayList<>();
