@@ -34,7 +34,7 @@ public class Guest extends User implements Searchable<Reservation> {
         totalStays++;
     }
 
-    public void checkUpgradeMemebershipLevel() {
+    public void checkUpgradeMembershipLevel() {
         if (totalStays >= 5) {
             membershipLevel = MembershipLevel.SILVER; 
         }
