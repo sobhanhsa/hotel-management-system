@@ -2,6 +2,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import enums.ReservationStatus;
+import enums.Season;
 import interfaces.Billable;
 import interfaces.Searchable;
 
@@ -65,6 +66,24 @@ public class Reservation implements
 
     public int getGuestCount() {
         return this.guestCount;
+    }
+
+    public Season getSeason() {
+        LocalDate firstDate = dates.get(0);
+        int month = firstDate.getMonthValue();   
+    
+        if (month >= 6 && month <= 8) {
+        return Season.SUMMER;      
+        } 
+        else if (month >= 3 && month <= 5) {
+            return Season.SPRING;    
+        } 
+        else if(month >= 9 && month <= 11) {
+            return Season.FALL;
+        }
+        else {
+            return Season.WINTER;     
+        }
     }
 
     @Override
