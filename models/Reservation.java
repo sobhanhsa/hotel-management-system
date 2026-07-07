@@ -12,7 +12,7 @@ public class Reservation implements
 {
 
     protected static int nextResevationId = 1;
-    private int reservationId;
+    private String reservationId;
     private Guest guest;
     private Room room;
     private List<LocalDate> dates;
@@ -25,7 +25,7 @@ public class Reservation implements
         List<LocalDate> dates
     ) {
 
-        this.reservationId = nextResevationId++;
+        this.reservationId = Integer.toString(nextResevationId++);
         this.guest = guest;
         this.room = room;
         this.dates = dates;
@@ -40,7 +40,7 @@ public class Reservation implements
         int guestCount
     ) {
 
-        this.reservationId = nextResevationId++;
+        this.reservationId = Integer.toString(nextResevationId++);
         this.guest = guest;
         this.room = room;
         this.dates = dates;
@@ -48,7 +48,7 @@ public class Reservation implements
         this.guestCount = guestCount;
     }
 
-    public int getReservationId() {
+    public String getReservationId() {
         return reservationId;
     }
 
