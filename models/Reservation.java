@@ -66,7 +66,7 @@ public class Reservation implements
         return this.room;
     }
 
-    public ReservationStatus gReservationStatus() {
+    public ReservationStatus getStatus() {
         return status;
     }
 
