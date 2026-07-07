@@ -59,6 +59,10 @@ public class Reservation implements
         return dates.size();
     }
 
+    public Room getRoom() {
+        return this.room;
+    }
+
     @Override
     public double calculateTotal() {
         return 0;
