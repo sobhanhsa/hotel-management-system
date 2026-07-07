@@ -86,9 +86,10 @@ public class Reservation implements
         }
     }
 
+    // AccommodationCost total price
     @Override
     public double calculateTotal() {
-        return 0;
+        return this.room.calculatePrice(getNights(), guestCount, getSeason().getRate());
     }
 
     @Override

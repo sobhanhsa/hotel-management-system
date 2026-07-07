@@ -49,11 +49,7 @@ public class Invoice implements Billable, Exportable {
     }
 
     private void calculateAccommodationCost() {
-        accommodationCost = reservation.getRoom().calculatePrice(
-                reservation.getNights(),
-                reservation.getGuestCount(),
-                this.reservation.getSeason().getRate()
-        );
+        accommodationCost = reservation.calculateTotal();
     }
 
     private void calculateServiceCost() {
