@@ -63,6 +63,10 @@ public class Reservation implements
         return this.room;
     }
 
+    public int getGuestCount() {
+        return this.guestCount;
+    }
+
     @Override
     public double calculateTotal() {
         return 0;
