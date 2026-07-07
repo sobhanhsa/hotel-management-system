@@ -1,3 +1,5 @@
+package models;
+
 import enums.RoomStatus;
 import enums.RoomType;
 

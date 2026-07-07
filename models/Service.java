@@ -1,3 +1,5 @@
+package models;
+
 public abstract class Service {
 
     private int nextServiceId = 1;

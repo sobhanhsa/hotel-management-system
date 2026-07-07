@@ -1,3 +1,5 @@
+package models;
+
 import enums.MembershipLevel;
 
 public class ParkingService extends Service {

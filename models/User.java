@@ -1,3 +1,5 @@
+package models;
+
 import enums.UserRole;
 
 public abstract class User extends Person {

@@ -1,3 +1,5 @@
+package models;
+
 public class MaintenanceRequest extends Service {
 
 
