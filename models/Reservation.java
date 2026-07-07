@@ -7,7 +7,8 @@ import interfaces.Searchable;
 
 public class Reservation implements
         Billable,
-        Searchable<Reservation>     {
+        Searchable<Reservation>     
+{
 
     protected static int nextResevationId = 1;
     private int reservationId;
@@ -15,6 +16,7 @@ public class Reservation implements
     private Room room;
     private List<LocalDate> dates;
     private ReservationStatus status;
+    private int guestCount;
 
     public Reservation(
         Guest guest,
@@ -27,6 +29,22 @@ public class Reservation implements
         this.room = room;
         this.dates = dates;
         this.status = ReservationStatus.PENDING;
+        this.guestCount = 1;
+    }
+
+    public Reservation(
+        Guest guest,
+        Room room,
+        List<LocalDate> dates,
+        int guestCount
+    ) {
+
+        this.reservationId = nextResevationId++;
+        this.guest = guest;
+        this.room = room;
+        this.dates = dates;
+        this.status = ReservationStatus.PENDING;
+        this.guestCount = guestCount;
     }
 
     public int getReservationId() {
@@ -37,6 +55,9 @@ public class Reservation implements
         return guest;
     }
 
+    public int getNights() {
+        return dates.size();
+    }
 
     @Override
     public double calculateTotal() {
