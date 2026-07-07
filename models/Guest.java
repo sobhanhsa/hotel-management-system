@@ -1,10 +1,12 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 import enums.MembershipLevel;
 import enums.UserRole;
+import interfaces.Searchable;
 
-public class Guest extends User {
+public class Guest extends User implements Searchable<Reservation> {
 
     private String nationalId;
     private String phone;
@@ -12,7 +14,8 @@ public class Guest extends User {
     private int totalStays;
     private List<Reservation> reservationHistory;
 
-    public Guest(String name, String username, String password, String nationalId, String phone) {
+    public Guest(String name, String username, String password, String nationalId, String phone)
+    {
         super(name, username, password, UserRole.GUEST);
         this.nationalId = nationalId;
         this.phone = phone;
@@ -40,4 +43,20 @@ public class Guest extends User {
     public void setMembershipLevel(MembershipLevel level) {
         this.membershipLevel = level;
     }
+
+    @Override
+    public List<Reservation> search(String query) {
+        return null;
+    }
+
+    @Override
+    public List<Reservation> filter(Predicate<Reservation> predicate) {
+        return reservationHistory.stream()
+                .filter(predicate)
+                .toList();
+    }
+    
+
+
+
 }
