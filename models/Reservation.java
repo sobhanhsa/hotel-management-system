@@ -66,6 +66,10 @@ public class Reservation implements
         return this.room;
     }
 
+    public ReservationStatus gReservationStatus() {
+        return status;
+    }
+
     public int getGuestCount() {
         return this.guestCount;
     }
