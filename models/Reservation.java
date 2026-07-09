@@ -59,6 +59,10 @@ public class Reservation implements
         return reservationId;
     }
 
+    public LocalDate getStartDate() {
+        return dates.get(0);
+    }
+
     public Guest getGuest() {
         return guest;
     }
