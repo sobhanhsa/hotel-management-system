@@ -184,6 +184,14 @@ public class Invoice implements Billable, Exportable {
         return vat;
     }
 
+    public double getPaidAmount() {
+        double total = 0;
+        for (Payment payment : payments) {
+            total += payment.getAmount();
+        }
+        return total;
+    }
+
     public double getTotalAmount() {
         return totalAmount;
     }
