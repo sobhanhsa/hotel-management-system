@@ -104,6 +104,10 @@ public class Invoice implements Billable, Exportable {
         balance = totalAmount - getTotalPayments();
     }
 
+    public boolean isFullyPaid() {
+        return balance==0;
+    }
+
     private double getTotalPayments() {
         double total = 0;
 
