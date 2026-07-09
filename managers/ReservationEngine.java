@@ -159,6 +159,9 @@ public class ReservationEngine implements Notifiable {
 
         guest.addReservation(reservation);
 
+        // init invoice
+        Invoice invoice = new Invoice(reservation);
+        reservation.setInvoice(invoice);
 
         return reservation;
     }
