@@ -223,7 +223,7 @@ public class ReservationEngine implements Notifiable {
         Invoice invoice = reservation.getInvoice();
 
 
-        if (invoice.getBalance() > 0) {
+        if (invoice.isFullyPaid()) {
             throw new UnpaidInvoiceException(
                     "Guest still has unpaid balance"
             );
