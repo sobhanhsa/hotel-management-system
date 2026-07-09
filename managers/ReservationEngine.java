@@ -283,7 +283,6 @@ public class ReservationEngine implements Notifiable {
 
         notifyObservers(room.getRoomNumber());
 
-
         return Math.max(refund, 0);
     }
 
@@ -295,14 +294,14 @@ public class ReservationEngine implements Notifiable {
                 reservation.getStartDate()
         );
 
-        double totalPrice = reservation.calculateTotal();
+        double totalPaymentsAmount = reservation.getInvoice().getPaidAmount();
 
         if (daysUntilCheckIn < 1) {
-            return totalPrice;
+            return totalPaymentsAmount;
         }
 
         if (daysUntilCheckIn <= 3) {
-            return totalPrice * 0.5;
+            return totalPaymentsAmount * 0.5;
         }
 
         return 0;
