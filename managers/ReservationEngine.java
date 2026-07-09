@@ -1,6 +1,7 @@
 package managers;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -10,6 +11,7 @@ import enums.RoomStatus;
 import enums.RoomType;
 import exceptions.InvalidDateRangeException;
 import exceptions.ReservationConflictException;
+import exceptions.ReservationNotFoundException;
 import exceptions.RoomNotAvailableException;
 import interfaces.Notifiable;
 import interfaces.RoomObserver;
@@ -253,10 +255,58 @@ public class ReservationEngine implements Notifiable {
         );
     }
 
-    public double cancelReservation(...);
+    public double cancelReservation(String reservationId) {
+
+        Reservation reservation = findReservationById(reservationId);
+
+        if (reservation == null) {
+            throw new ReservationNotFoundException("room not found");
+        }
+
+        if (reservation.getStatus() == ReservationStatus.CANCELLED ||
+            reservation.getStatus() == ReservationStatus.COMPLETED) {
+            return 0;
+        }
 
 
-    private double calculatePenalty(...);
+        double penalty = calculatePenalty(reservation);
+
+        double refund = reservation.getInvoice().getPaidAmount() - penalty;
+
+
+        reservation.setStatus(ReservationStatus.CANCELLED);
+
+
+        Room room = reservation.getRoom();
+        room.setStatus(RoomStatus.AVAILABLE);
+
+
+        notifyObservers(room.getRoomNumber());
+
+
+        return Math.max(refund, 0);
+    }
+
+    private double calculatePenalty(Reservation reservation) {
+
+        // calcuate days
+        long daysUntilCheckIn = ChronoUnit.DAYS.between(
+                LocalDate.now(),
+                reservation.getStartDate()
+        );
+
+        double totalPrice = reservation.calculateTotal();
+
+        if (daysUntilCheckIn < 1) {
+            return totalPrice;
+        }
+
+        if (daysUntilCheckIn <= 3) {
+            return totalPrice * 0.5;
+        }
+
+        return 0;
+    }
 
     @Override
     public void registerObserver(RoomObserver observer) {
