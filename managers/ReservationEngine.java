@@ -67,7 +67,7 @@ public class ReservationEngine implements Notifiable {
         return false;
     }
 
-    private boolean isRoomAvailable(Room room, ArrayList<LocalDate> dates) {
+    public boolean isRoomAvailable(Room room, ArrayList<LocalDate> dates) {
 
         if (room.getStatus() != RoomStatus.AVAILABLE)
             return false;
