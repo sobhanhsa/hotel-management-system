@@ -10,7 +10,7 @@ public class LogManager {
 
     private final List<LogEntry> logs = new ArrayList<>();
 
-    public void log(
+    public void addLog(
             LogLevel level,
             String username,
             String action,
