@@ -18,6 +18,7 @@ import interfaces.Notifiable;
 import interfaces.RoomObserver;
 import models.Guest;
 import models.Invoice;
+import models.Receptionist;
 import models.Reservation;
 import models.Room;
 import exceptions.InvalidReservationStatusException;
@@ -198,7 +199,8 @@ public class ReservationEngine implements Notifiable {
     }
 
     public void checkIn(
-            Reservation reservation
+            Reservation reservation,
+            Receptionist receptionist
     ) {
 
 
@@ -217,35 +219,46 @@ public class ReservationEngine implements Notifiable {
         reservation.getRoom()
             .setStatus(
                 RoomStatus.OCCUPIED
-            );
-    }
+        );
 
-    public void checkOut(Reservation reservation)
-        throws InvalidReservationStatusException,
+        logManager.addLog(
+            LogLevel.INFO,
+            receptionist.getUsername(),
+            "CHECK_IN",
+            "[Room: "
+            + reservation.getRoom().getRoomNumber()
+            + "] [Guest: "
+            + reservation.getGuest().getUsername()
+            + "]"
+        );
+    }
+    
+    public void checkOut(Reservation reservation, Receptionist receptionist)
+    throws InvalidReservationStatusException,
             UnpaidInvoiceException 
         {
 
 
         if (reservation.getStatus() != ReservationStatus.ACTIVE) {
             throw new InvalidReservationStatusException(
-                    "Reservation is not active"
+                "Reservation is not active"
             );
         }
-
-
+        
+        
         Invoice invoice = reservation.getInvoice();
-
-
+        
+        
         if (invoice.isFullyPaid()) {
             throw new UnpaidInvoiceException(
-                    "Guest still has unpaid balance"
+                "Guest still has unpaid balance"
             );
         }
 
 
         // reservation complete
         reservation.setStatus(
-                ReservationStatus.COMPLETED
+            ReservationStatus.COMPLETED
         );
 
 
@@ -253,26 +266,36 @@ public class ReservationEngine implements Notifiable {
         Room room = reservation.getRoom();
 
         room.setStatus(
-                RoomStatus.AVAILABLE
+            RoomStatus.AVAILABLE
         );
-
-
+            
+            
         // update guest history
         Guest guest = reservation.getGuest();
-
+        
         guest.increaseStay();
-
+        
         guest.checkUpgradeMembershipLevel();
-
-
+        
+        
         // notify waitlist
         notifyObservers(
                 room.getRoomNumber()
         );
+        logManager.addLog(
+            LogLevel.INFO,
+            receptionist.getUsername(),
+            "CHECK_IN",
+            "[Room: "
+            + reservation.getRoom().getRoomNumber()
+            + "] [Guest: "
+            + reservation.getGuest().getUsername()
+            + "]"
+        );
     }
-
+    
     public void cancelReservation(String reservationId) {
-
+        
         Reservation reservation = findReservationById(reservationId);
 
         if (reservation == null) {
