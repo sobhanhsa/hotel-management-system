@@ -271,7 +271,7 @@ public class ReservationEngine implements Notifiable {
         );
     }
 
-    public double cancelReservation(String reservationId) {
+    public void cancelReservation(String reservationId) {
 
         Reservation reservation = findReservationById(reservationId);
 
@@ -281,7 +281,7 @@ public class ReservationEngine implements Notifiable {
 
         if (reservation.getStatus() == ReservationStatus.CANCELLED ||
             reservation.getStatus() == ReservationStatus.COMPLETED) {
-            return 0;
+            return ;
         }
 
 
@@ -315,7 +315,6 @@ public class ReservationEngine implements Notifiable {
             + "[Penalty: " + penalty + "]"
         );
 
-        return Math.max(refund, 0);
     }
 
     private double calculatePenalty(Reservation reservation) {
