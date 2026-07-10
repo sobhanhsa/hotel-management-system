@@ -181,7 +181,8 @@ public class ReservationEngine implements Notifiable {
     }
 
     public void confirmReservation(
-        Reservation reservation
+        Reservation reservation,
+        Receptionist receptionist
     ) {
 
         if (
@@ -195,6 +196,13 @@ public class ReservationEngine implements Notifiable {
 
         reservation.setStatus(
             ReservationStatus.CONFIRMED
+        );
+
+        logManager.addLog(
+            LogLevel.INFO,
+            receptionist.getUsername(),
+            "UPDATE_RESERVATION",
+            "[Reservation: " + reservation.getReservationId() + "]"
         );
     }
 
