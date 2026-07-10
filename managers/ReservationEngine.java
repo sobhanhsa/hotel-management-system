@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import enums.LogLevel;
 import enums.ReservationStatus;
 import enums.RoomStatus;
 import enums.RoomType;
@@ -165,6 +166,14 @@ public class ReservationEngine implements Notifiable {
         Invoice invoice = new Invoice(reservation);
         reservation.setInvoice(invoice);
 
+        logManager.addLog(
+            LogLevel.INFO,
+            guest.getUsername(),
+            "CREATE_RESERVATION",
+            "[Reservation: " + reservation.getReservationId() + "] "
+            + "[Room: " + room.getRoomNumber() + "]"
+        );
+
         return reservation;
     }
 
@@ -287,6 +296,14 @@ public class ReservationEngine implements Notifiable {
 
 
         notifyObservers(room.getRoomNumber());
+
+        logManager.addLog(
+            LogLevel.INFO,
+            reservation.getGuest().getUsername(),
+            "CANCEL_RESERVATION",
+            "[Reservation: " + reservation.getReservationId() + "] "
+            + "[Penalty: " + penalty + "]"
+        );
 
         return Math.max(refund, 0);
     }
