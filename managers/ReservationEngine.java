@@ -28,8 +28,10 @@ public class ReservationEngine implements Notifiable {
     private final ArrayList<Reservation> reservations;
     private final ArrayList<RoomObserver> observers;
     private final LogManager logManager;
+    private final FinancialManager financialManager;
 
-    public ReservationEngine(LogManager logManager) {
+    public ReservationEngine(LogManager logManager , FinancialManager financialManager) {
+        this.financialManager = financialManager;
         this.logManager = logManager;
         reservations = new ArrayList<>();
         observers = new ArrayList<>();
@@ -286,6 +288,14 @@ public class ReservationEngine implements Notifiable {
         double penalty = calculatePenalty(reservation);
 
         double refund = reservation.getInvoice().getPaidAmount() - penalty;
+
+        if (refund > 0) {
+            financialManager.refund(
+                    reservation.getInvoice(),
+                    reservation.getGuest(),
+                    refund
+            );
+        }
 
 
         reservation.setStatus(ReservationStatus.CANCELLED);
