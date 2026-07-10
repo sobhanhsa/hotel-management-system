@@ -26,8 +26,10 @@ public class ReservationEngine implements Notifiable {
 
     private final ArrayList<Reservation> reservations;
     private final ArrayList<RoomObserver> observers;
+    private final LogManager logManager;
 
-    public ReservationEngine() {
+    public ReservationEngine(LogManager logManager) {
+        this.logManager = logManager;
         reservations = new ArrayList<>();
         observers = new ArrayList<>();
     }
