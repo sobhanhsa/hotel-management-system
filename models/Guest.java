@@ -42,7 +42,7 @@ public class Guest extends User implements Searchable<Reservation> {
             membershipLevel = MembershipLevel.GOLD;
         }
         else if(totalStays >= 30) {
-            membershipLevel = MembershipLevel.SILVER;
+            membershipLevel = MembershipLevel.PLATINUM;
         }
     }
 
@@ -52,6 +52,14 @@ public class Guest extends User implements Searchable<Reservation> {
 
     public MembershipLevel getMembershipLevel() {
         return membershipLevel;
+    }
+
+    public List<Reservation> getReservationHistory() {
+        return reservationHistory;
+    }
+
+    public String getNationalId() {
+        return nationalId;
     }
 
     public void setMembershipLevel(MembershipLevel level) {
