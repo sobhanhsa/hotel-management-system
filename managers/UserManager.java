@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import enums.LogLevel;
+import enums.MembershipLevel;
 import models.Guest;
 import models.SuperAdmin;
 import models.User;
@@ -74,6 +75,42 @@ public class UserManager {
 
         return null;
     }
+
+    public Guest registerGuest(
+        String username,
+        String password,
+        String fullName,
+        String nationalId,
+        String phone
+    ) {
+
+        validateUniqueUsername(username);
+
+        validateUniqueNationalId(nationalId);
+
+
+        Guest guest = new Guest(
+                fullName,
+                username,
+                password,
+                nationalId,
+                phone
+        );
+
+
+        users.add(guest);
+
+
+        logManager.addLog(
+                LogLevel.INFO,
+                username,
+                "REGISTER_GUEST",
+                "New guest account created"
+        );
+
+
+        return guest;
+    }   
 
     public void logout() {
 
