@@ -10,6 +10,7 @@ import enums.UserRole;
 import exceptions.AccessDeniedException;
 import models.Guest;
 import models.HotelManager;
+import models.Receptionist;
 import models.SuperAdmin;
 import models.User;
 
@@ -169,6 +170,48 @@ public class UserManager {
 
 
         return manager;
+    }
+
+    public Receptionist createReceptionist(
+        String name,
+        String username,
+        String password,
+        String employeeId,
+        LocalDate hireDate,
+        String departmentName
+    ) {
+
+        requireRole(
+                UserRole.HOTEL_MANAGER
+        );
+
+
+        validateUniqueUsername(username);
+
+
+        Receptionist receptionist =
+                new Receptionist(
+                        name,
+                        username,
+                        password,
+                        employeeId,
+                        hireDate,
+                        departmentName
+                );
+
+
+        users.add(receptionist);
+
+
+        logManager.addLog(
+                LogLevel.INFO,
+                currentUser.getUsername(),
+                "CREATE_RECEPTIONIST",
+                "[Created User: " + username + "]"
+        );
+
+
+        return receptionist;
     }
 
     // helpers
