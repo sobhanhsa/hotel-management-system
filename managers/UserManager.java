@@ -264,4 +264,56 @@ public class UserManager {
             );
         }
     }
+
+    // user getter || setters
+
+    public User findByUsername(
+        String username
+    ) {
+
+        for (User user : users) {
+
+            if (user.getUsername().equals(username)) {
+
+                return user;
+            }
+        }
+
+
+        return null;
+    }
+
+    public Guest findGuestByNationalId(
+        String nationalId
+    ) {
+
+        for (User user : users) {
+
+            if (user instanceof Guest guest) {
+
+                if (guest.getNationalId().equals(nationalId)) {
+
+                    return guest;
+                }
+            }
+        }
+
+
+        return null;
+    }
+
+    public ArrayList<User> getAllUsers() {
+
+        return users;
+    }
+
+    public User getCurrentUser() {
+
+        return currentUser;
+    }
+
+    public boolean isLoggedIn() {
+
+        return currentUser != null;
+    }
 }
