@@ -270,6 +270,57 @@ public class UserManager {
         );
     }
 
+    public ArrayList<User> getUsersByRole(
+        UserRole role
+    ) {
+
+        ArrayList<User> result = new ArrayList<>();
+
+
+        for (User user : users) {
+
+            if (user.getRole() == role) {
+
+                result.add(user);
+            }
+        }
+
+
+        return result;
+    }
+
+    public void removeUser(
+        String username
+    ) throws AccessDeniedException{
+
+        requireRole(
+                UserRole.SUPER_ADMIN
+        );
+
+
+        User user = findByUsername(username);
+
+
+        if (user == null) {
+            return;
+        }
+
+        if (user == currentUser) {
+            throw new AccessDeniedException("you can't remove your self!");
+        }
+
+
+        users.remove(user);
+
+
+        logManager.addLog(
+                LogLevel.INFO,
+                currentUser.getUsername(),
+                "DELETE_USER",
+                "[Deleted User: " + username + "]"
+        );
+    }
+
     // helpers
     
     private void validateUniqueUsername(String username) {
