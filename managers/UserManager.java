@@ -7,6 +7,7 @@ import java.util.List;
 import enums.LogLevel;
 import enums.MembershipLevel;
 import enums.UserRole;
+import exceptions.AccessDeniedException;
 import models.Guest;
 import models.HotelManager;
 import models.SuperAdmin;
@@ -203,7 +204,7 @@ public class UserManager {
 
     private void requireRole(
         UserRole role
-    ) throws RuntimeException{
+    ) throws AccessDeniedException{
 
         if (currentUser == null || currentUser.getRole() != role) {
 
@@ -215,7 +216,7 @@ public class UserManager {
             );
 
 
-            throw new RuntimeException(
+            throw new AccessDeniedException(
                     "Access denied"
             );
         }
