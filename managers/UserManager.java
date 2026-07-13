@@ -82,9 +82,10 @@ public class UserManager {
 
 
         logManager.addLog(
-                "INFO",
+                LogLevel.INFO,
                 currentUser.getUsername(),
-                "LOGOUT"
+                "LOGOUT",
+                currentUser.getUsername() + " logged out"
         );
 
 
