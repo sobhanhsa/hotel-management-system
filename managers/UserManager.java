@@ -74,4 +74,21 @@ public class UserManager {
         return null;
     }
 
+    public void logout() {
+
+        if (currentUser == null) {
+            return;
+        }
+
+
+        logManager.addLog(
+                "INFO",
+                currentUser.getUsername(),
+                "LOGOUT"
+        );
+
+
+        currentUser = null;
+    }   
+
 }
