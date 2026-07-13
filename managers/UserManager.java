@@ -6,6 +6,7 @@ import java.util.List;
 
 import enums.LogLevel;
 import enums.MembershipLevel;
+import enums.UserRole;
 import models.Guest;
 import models.SuperAdmin;
 import models.User;
@@ -161,4 +162,23 @@ public class UserManager {
         }
     }
 
+    private void requireRole(
+        UserRole role
+    ) throws RuntimeException{
+
+        if (currentUser == null || currentUser.getRole() != role) {
+
+            logManager.addLog(
+                    LogLevel.ERROR,
+                    currentUser.getUsername(),
+                    "ACCESS_DENIED",
+                    "[Required Role: " + role + "]"
+            );
+
+
+            throw new RuntimeException(
+                    "Access denied"
+            );
+        }
+    }
 }
