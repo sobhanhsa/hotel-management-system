@@ -2,6 +2,7 @@ package managers;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import enums.LogLevel;
@@ -353,23 +354,37 @@ public class UserManager {
     }
 
     private void requireRole(
-        UserRole role
-    ) throws AccessDeniedException{
+        UserRole... allowedRoles
+    ) {
 
-        if (currentUser == null || currentUser.getRole() != role) {
-
-            logManager.addLog(
-                    LogLevel.ERROR,
-                    currentUser.getUsername(),
-                    "ACCESS_DENIED",
-                    "[Required Role: " + role + "]"
-            );
-
+        if (currentUser == null) {
 
             throw new AccessDeniedException(
-                    "Access denied"
+                    "No user logged in"
             );
         }
+
+
+        for (UserRole role : allowedRoles) {
+
+            if (currentUser.getRole() == role) {
+                return;
+            }
+        }
+
+
+        logManager.addLog(
+                LogLevel.WARNING,
+                currentUser.getUsername(),
+                "ACCESS_DENIED",
+                "Required roles: "
+                        + Arrays.toString(allowedRoles)
+        );
+
+
+        throw new AccessDeniedException(
+                "Access denied"
+        );
     }
 
     // user getter || setters
