@@ -8,6 +8,7 @@ import enums.LogLevel;
 import enums.MembershipLevel;
 import enums.UserRole;
 import models.Guest;
+import models.HotelManager;
 import models.SuperAdmin;
 import models.User;
 
@@ -130,6 +131,44 @@ public class UserManager {
 
         currentUser = null;
     }   
+
+    public HotelManager createHotelManager(
+        String name,
+        String username,
+        String password,
+        String employeeId,
+        LocalDate hireDate,
+        String departmentName
+    ) {
+
+        requireRole(UserRole.SUPER_ADMIN);
+
+        validateUniqueUsername(username);
+
+
+        HotelManager manager = new HotelManager(
+                name,
+                username,
+                password,
+                employeeId,
+                hireDate,
+                departmentName
+        );
+
+
+        users.add(manager);
+
+
+        logManager.addLog(
+                LogLevel.INFO,
+                currentUser.getUsername(),
+                "CREATE_HOTEL_MANAGER",
+                "Created: " + username
+        );
+
+
+        return manager;
+    }
 
     // helpers
     
