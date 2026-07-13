@@ -214,6 +214,62 @@ public class UserManager {
         return receptionist;
     }
 
+    public void disableUser(
+        String username
+    ) {
+
+        requireRole(
+                UserRole.SUPER_ADMIN
+        );
+
+
+        User user = findByUsername(username);
+
+
+        if (user == null) {
+            return;
+        }
+
+
+        user.setEnabled(false);
+
+
+        logManager.addLog(
+                LogLevel.INFO,
+                currentUser.getUsername(),
+                "DISABLE_USER",
+                "[Disabled User: " + username + "]"
+        );
+    }
+    
+    public void enableUser(
+        String username
+    ) {
+
+        requireRole(
+                UserRole.SUPER_ADMIN
+        );
+
+
+        User user = findByUsername(username);
+
+
+        if (user == null) {
+            return;
+        }
+
+
+        user.setEnabled(true);
+
+
+        logManager.addLog(
+                LogLevel.INFO,
+                currentUser.getUsername(),
+                "ENABLE_USER",
+                "[Enabled User: " + username + "]"
+        );
+    }
+
     // helpers
     
     private void validateUniqueUsername(String username) {
