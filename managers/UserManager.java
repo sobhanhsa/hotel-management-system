@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import enums.LogLevel;
+import models.Guest;
 import models.SuperAdmin;
 import models.User;
 
@@ -91,5 +92,36 @@ public class UserManager {
 
         currentUser = null;
     }   
+
+    // helpers
+    
+    private void validateUniqueUsername(String username) {
+
+        for (User user : users) {
+
+            if (user.getUsername().equals(username)) {
+
+                throw new IllegalArgumentException(
+                        "Username already exists"
+                );
+            }
+        }
+    }
+
+    private void validateUniqueNationalId(String nationalId) {
+
+        for (User user : users) {
+
+            if (user instanceof Guest guest) {
+
+                if (guest.getNationalId().equals(nationalId)) {
+
+                    throw new IllegalArgumentException(
+                            "National ID already exists"
+                    );
+                }
+            }
+        }
+    }
 
 }
