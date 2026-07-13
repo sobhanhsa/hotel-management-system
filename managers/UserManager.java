@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import enums.LogLevel;
 import models.SuperAdmin;
 import models.User;
 
@@ -36,6 +37,41 @@ public class UserManager {
                 LocalDate.now()
         );
         users.add(admin);
+    }
+
+    public User login(
+        String username,
+        String password
+    ) {
+
+        for (User user : users) {
+
+            if (user.getUsername().equals(username)
+                    && user.checkPassword(password)) {
+
+
+                if (!user.isEnabled()) {
+                    return null;
+                }
+
+
+                currentUser = user;
+
+
+                logManager.addLog(
+                        LogLevel.INFO,
+                        currentUser.getUsername(),
+                        "LOGIN",
+                        currentUser.getName()+"logged in"
+                );
+
+
+                return user;
+            }
+        }
+
+
+        return null;
     }
 
 }
