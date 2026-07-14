@@ -164,7 +164,7 @@ public class ReservationEngine implements Notifiable {
 
 
         reservation.setStatus(
-                ReservationStatus.PENDING
+                ReservationStatus.CONFIRMED
         );
 
 
