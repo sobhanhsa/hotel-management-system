@@ -8,7 +8,11 @@ import enums.RoomStatus;
 import enums.RoomType;
 import exceptions.DuplicateRoomException;
 import exceptions.RoomNotFoundException;
+import models.DeluxeRoom;
+import models.PentHouse;
 import models.Room;
+import models.StandardRoom;
+import models.Suite;
 
 public class RoomManager {
 
@@ -55,12 +59,61 @@ public class RoomManager {
         return true;
     }
 
-    public void addRoom(Room room) throws DuplicateRoomException {
+    public void addRoom(
+        String roomNumber,
+        RoomType type,
+        double basePrice,
+        int floorNumber,
+        int capacity
+    ) throws DuplicateRoomException {
 
-        if (findRoom(room.getRoomNumber()) != null) {
+        if (findRoom(roomNumber) != null) {
             throw new DuplicateRoomException(
-                    "Room " + room.getRoomNumber() + " already exists"
+                    "Room already exists: " + roomNumber
             );
+        }
+
+        Room room;
+
+        switch (type) {
+            case STANDARD:
+                room = new StandardRoom(
+                        roomNumber,
+                        basePrice,
+                        floorNumber,
+                        capacity
+                );
+                break;
+
+            case DELUXE:
+                room = new DeluxeRoom(
+                        roomNumber,
+                        basePrice,
+                        floorNumber,
+                        capacity
+                );
+                break;
+
+            case SUITE:
+                room = new Suite(
+                        roomNumber,
+                        basePrice,
+                        floorNumber,
+                        capacity
+                );
+                break;
+
+            case PENTHOUSE:
+                room = new PentHouse(
+                        roomNumber,
+                        basePrice,
+                        floorNumber,
+                        capacity
+                );
+                break;
+
+            default:
+                throw new IllegalArgumentException("Unknown room type");
         }
 
         rooms.add(room);
