@@ -44,6 +44,8 @@ public class LoginView {
                 default:
                     Console.error("Invalid option.");
             }
+
+            Console.pause();
         }
     }
 
