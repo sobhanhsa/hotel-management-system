@@ -67,10 +67,12 @@ public class RoomManager {
         int capacity
     ) throws DuplicateRoomException {
 
-        if (findRoom(roomNumber) != null) {
-            throw new DuplicateRoomException(
-                    "Room already exists: " + roomNumber
-            );
+        for (Room existingRoom : rooms) {
+            if (existingRoom.getRoomNumber().equals(roomNumber)) {
+                throw new DuplicateRoomException(
+                        "Room already exists: " + roomNumber
+                );
+            }
         }
 
         Room room;
