@@ -16,61 +16,61 @@ import models.ServiceOrder;
 
 public class ServiceManager {
 
-    private List<ServiceOrder> serviceOrders;
-    private List<Service> availableServices;
+        private List<ServiceOrder> serviceOrders;
+        private List<Service> availableServices;
 
-    public ServiceManager() {
-        availableServices = new ArrayList<>();
-        serviceOrders = new ArrayList<>();
-        initializeDefaultServices();
-    }
-
-    public void addServiceToInvoice(
-            Invoice invoice,
-            Service service
-    ) throws InvalidDateRangeException{
-        if (service instanceof ExtraCleaningService) {
-            LocalTime start = LocalTime.of(9, 0);
-            LocalTime end = LocalTime.of(17, 0);
-            
-            LocalTime now = LocalTime.now();
-            
-            boolean inside =
-                    !now.isBefore(start) &&
-                    !now.isAfter(end);
-
-            if (!inside) 
-                throw new OutsideWorkingHoursException("out of operating hours");
+        public ServiceManager() {
+                availableServices = new ArrayList<>();
+                serviceOrders = new ArrayList<>();
+                initializeDefaultServices();
         }
 
-        invoice.addService(new ServiceOrder(service, 1));
-        serviceOrders.add(new ServiceOrder(service, 1));
-    }
+        public void addServiceToInvoice(
+                Invoice invoice,
+                Service service
+        ) throws InvalidDateRangeException{
+                if (service instanceof ExtraCleaningService) {
+                        LocalTime start = LocalTime.of(9, 0);
+                        LocalTime end = LocalTime.of(17, 0);
+                        
+                        LocalTime now = LocalTime.now();
+                        
+                        boolean inside =
+                                !now.isBefore(start) &&
+                                !now.isAfter(end);
 
-    private void initializeDefaultServices() {
+                        if (!inside) 
+                                throw new OutsideWorkingHoursException("out of operating hours");
+                }
 
-        availableServices.add(
-                new MiniBarService(
-                        45000
-                )
-        );
+                invoice.addService(new ServiceOrder(service, 1));
+                serviceOrders.add(new ServiceOrder(service, 1));
+        }
 
-        availableServices.add(
-                new ExtraCleaningService(
-                )
-        );
+        private void initializeDefaultServices() {
 
-        availableServices.add(
-                new ParkingService()
-        );
+                availableServices.add(
+                        new MiniBarService(
+                                45000
+                        )
+                );
 
-        availableServices.add(
-                new MaintenanceRequest()
-        );
-    }
+                availableServices.add(
+                        new ExtraCleaningService(
+                        )
+                );
 
-    public List<Service> getAvailableServices() {
-        return availableServices;
-    }
+                availableServices.add(
+                        new ParkingService()
+                );
+
+                availableServices.add(
+                        new MaintenanceRequest()
+                );
+        }
+
+        public List<Service> getAvailableServices() {
+                return availableServices;
+        }
 
 }
