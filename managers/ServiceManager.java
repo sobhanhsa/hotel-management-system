@@ -8,7 +8,7 @@ import models.ServiceOrder;
 
 public class ServiceManager {
 
-    private List<ServiceOrder> services;
+    private List<ServiceOrder> serviceOrders;
 
     public void addServiceToInvoice(
             Invoice invoice,
@@ -17,8 +17,8 @@ public class ServiceManager {
         invoice.addService(new ServiceOrder(service, 1));
     }
 
-    public List<ServiceOrder> getAvailableServices() {
-        return services;
+    public List<ServiceOrder> getAvailableServiceOrders() {
+        return serviceOrders;
     }
 
 }
