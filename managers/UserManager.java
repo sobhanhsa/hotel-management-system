@@ -9,6 +9,7 @@ import enums.LogLevel;
 import enums.MembershipLevel;
 import enums.UserRole;
 import exceptions.AccessDeniedException;
+import exceptions.GuestNotFoundException;
 import models.Guest;
 import models.HotelManager;
 import models.Receptionist;
@@ -421,7 +422,7 @@ public class UserManager {
         }
 
 
-        return null;
+        throw new GuestNotFoundException("no guest with "+nationalId+" exists");
     }
 
     public ArrayList<User> getAllUsers() {
