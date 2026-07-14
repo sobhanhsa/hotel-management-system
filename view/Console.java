@@ -70,7 +70,7 @@ public final class Console {
 
     public static boolean confirm(String prompt) {
         while (true) {
-            System.out.print(prompt + " (y/n): ");
+            System.out.print(prompt + "\n" + " (y/n): ");
 
             String input = scanner.nextLine().trim().toLowerCase();
 
