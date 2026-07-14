@@ -245,9 +245,7 @@ public class HotelManagerView {
         } catch (IllegalArgumentException e) {
             Console.error("username already exists");
         }
-        catch (Exception e) {
-            Console.error(e.getMessage());
-        }
+        
     }
 
 
@@ -321,9 +319,7 @@ public class HotelManagerView {
         } catch (RoomNotFoundException e) {
             Console.error(roomNumber + " not found");
         }
-        catch (Exception e) {
-            Console.error(e.getMessage());
-        }
+        
         
 
 
