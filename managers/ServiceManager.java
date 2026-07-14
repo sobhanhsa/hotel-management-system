@@ -15,6 +15,7 @@ public class ServiceManager {
             Service service
     ) {
         invoice.addService(new ServiceOrder(service, 1));
+        serviceOrders.add(new ServiceOrder(service, 1));
     }
 
     public List<ServiceOrder> getAvailableServiceOrders() {
