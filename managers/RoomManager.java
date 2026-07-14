@@ -38,14 +38,14 @@ public class RoomManager {
                 .toList();
     }
 
-    public Room findRoom(String roomNumber) {
+    public Room findRoom(String roomNumber) throws RoomNotFoundException {
         for (Room room : rooms) {
             if (room.getRoomNumber().equals(roomNumber)) {
                 return room;
             }
         }
 
-        return null;
+        throw new RoomNotFoundException(roomNumber + " was not found");
     }
 
     public boolean removeRoom(String roomNumber) throws RoomNotFoundException {
