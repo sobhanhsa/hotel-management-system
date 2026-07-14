@@ -23,10 +23,11 @@ public class Main {
         LogManager logManager = new LogManager();
         UserManager userManager = new UserManager(logManager);
         FinancialManager financialManager = new FinancialManager(logManager);
-        ReservationEngine reservationEngine = new ReservationEngine(logManager,financialManager);
+        ReservationEngine reservationEngine = new ReservationEngine(logManager, financialManager);
         RoomManager roomManager = new RoomManager(reservationEngine);
         ReportManager reportManager = new ReportManager(
-            null, null, null
+            roomManager,
+            reservationEngine
         );
         ServiceManager serviceManager = new ServiceManager();
 
