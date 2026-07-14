@@ -361,7 +361,7 @@ public class ReservationEngine implements Notifiable {
 
     }
 
-    private double calculatePenalty(Reservation reservation) {
+    public double calculatePenalty(Reservation reservation) {
 
         // calcuate days
         long daysUntilCheckIn = ChronoUnit.DAYS.between(
