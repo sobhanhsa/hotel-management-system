@@ -39,19 +39,32 @@ public class ReservationEngine implements Notifiable {
     }
     
     // helper function
-    public Reservation findReservationById(String reservationId) {
+    public Reservation findReservationById(String reservationId) 
+        throws ReservationNotFoundException {
         for (Reservation reservation : reservations) {
             if (reservation.getReservationId().equals(reservationId)) {
                 return reservation;
             }
         }
-        return null;
+        throw new ReservationNotFoundException(reservationId + " not found");
     }
 
+    // getters and setters
     public List<Reservation> getReservations() {
         return new ArrayList<>(reservations);
     }
 
+    public Invoice getInvoiceByReservationId(String reservationId) 
+        throws ReservationNotFoundException {
+
+        Reservation reservation = findReservationById(reservationId);
+
+
+        return reservation.getInvoice();
+    }
+    
+
+    // operations
     private boolean hasConflict(Room room, ArrayList<LocalDate> dates) {
         // check for the same room in different reservation overlapping in date!
         for (Reservation reservation : reservations) {
