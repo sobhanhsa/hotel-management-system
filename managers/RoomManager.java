@@ -23,6 +23,10 @@ public class RoomManager {
         this.reservationEngine = reservationEngine;
     }
 
+    public List<Room> getRooms() {
+        return new ArrayList<>(rooms);
+    }
+
     public List<Room> searchAvailableRooms(
             RoomType type,
             LocalDate checkIn,
