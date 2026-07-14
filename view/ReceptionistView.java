@@ -220,8 +220,6 @@ public class ReceptionistView {
             Console.readLine(
                     "Guest national ID: "
             );
-        Guest guest = userManager.findGuestByNationalId(nationalId);
-
 
         String roomNumber =
             Console.readLine(
@@ -253,7 +251,8 @@ public class ReceptionistView {
             
             
         try {
-        
+            Guest guest = userManager.findGuestByNationalId(nationalId);
+
             Room room = roomManager.findRoom(roomNumber);
 
             reservationEngine.createReservation(
@@ -279,6 +278,9 @@ public class ReceptionistView {
             Console.error(e.getMessage());
         }
         catch (RoomNotFoundException e) {
+            Console.error(e.getMessage());
+        }
+        catch (GuestNotFoundException e) {
             Console.error(e.getMessage());
         }
     }
