@@ -102,7 +102,7 @@ public class ReceptionistView {
                 }
 
 
-            } catch (HotelException e) {
+            } catch (HotelException | IllegalArgumentException e) {
 
                 Console.error(e.getMessage());
 
