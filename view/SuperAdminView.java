@@ -145,9 +145,7 @@ public class SuperAdminView {
         );
 
 
-        // connect to your SystemConfig manager here
-        // example:
-        // Console.println(systemConfig.toString());
+        // my configurations are static :(
 
 
         Console.warning(
